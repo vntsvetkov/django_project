@@ -1,0 +1,75 @@
+from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import render
+from django.http import HttpRequest, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
+from catalog.books import Book
+
+
+# Create your views here.
+def main(request: HttpRequest):
+
+    book1 = Book("Совершенные. Тайны Пантеона",
+                "«Если Август Рэй Эттвуд пройдет свой темный путь, он превзойдет дьявола и наш мир падет…»",
+                107)
+
+    book2 = Book("Железное пламя",
+                 "Никто не ожидал, что Вайолет Сорренгейл выживет в Военной академии Басгиат, включая саму Вайолет. ",
+                 25)
+
+    data = list()
+    data.append(book1)
+    data.append(book2)
+
+    context = {
+        "data": data
+    }
+
+    return render(request, template_name='books.html', context=context)
+
+
+def get_by_genre(request: HttpRequest, genre=None):
+    # Получить список категорий из таблицы Categories
+    genre_data = ['classic', 'adventure', 'fantastic']
+
+    if genre in genre_data:
+        title = None
+        author = None
+        if request.method == "GET":
+            title = request.GET.get('title', '')
+            author = request.GET.get('author', '')
+
+        if request.method == "POST":
+            title = request.POST.get('title', '')
+            author = request.POST.get('author', '')
+
+        if not title and not author:
+            return HttpResponseNotFound(f""" <h1> В жанре {genre} этой книги не найдено </h1>""")
+
+        # Запрос к БД по 2 параметрам и получение данных в data
+        # Посмотреть что пришли непустые данные
+        # Либо допустим пришли следующие 2 книги book1 и book2
+        book1 = Book("Совершенные. Тайны Пантеона",
+                     "«Если Август Рэй Эттвуд пройдет свой темный путь, он превзойдет дьявола и наш мир падет…»",
+                     107)
+
+        book2 = Book("Железное пламя",
+                     "Никто не ожидал, что Вайолет Сорренгейл выживет в Военной академии Басгиат, включая саму Вайолет. ",
+                     25)
+
+        data = list()
+        data.append(book1)
+        data.append(book2)
+
+        context = {
+            "data": data
+        }
+
+        return render(request, template_name='books.html', context=context)
+
+    else:
+        return HttpResponseNotFound(f""" <h1> В жанре {genre} книг не найдено </h1>""")
+
+
+def redirect(request: HttpRequest):
+    return HttpResponseRedirect('/catalog/')
