@@ -7,17 +7,43 @@
 {% endblock %}
 
 {% block headercontent %}
-    <h1> Добро пожаловать в каталог электронной библиотеки! </h1>
+    <div class="header-info">
+        <h1> Добро пожаловать в каталог электронной библиотеки! </h1>
+    </div>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
 
+    <div style="padding: 20px;" class="container">
         <div class="row">
-            {% include "book_cards.html" %}
-        </div>
+            <div class="col-2">
+                <ul class="nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Показать все</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Классика</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Приключения</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Фантастика</a>
+                  </li>
+                </ul>
+            </div>
+            <div class="col-10">
+              <div class="container">
 
+                    <div class="row">
+                        {% include "book_cards.html" %}
+                    </div>
+
+              </div>
+            </div>
+        </div>
     </div>
+
 {% endblock %}
 
 
