@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1> Добро пожаловать на главную страницу блога </h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block localstyle %}
+    <link href="{% static 'styles/posts_style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block headercontent %}
+    <h1> Добро пожаловать на новостную страницу электронной библиотеки! </h1>
+{% endblock %}
