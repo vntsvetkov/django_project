@@ -8,5 +8,5 @@ def main(request: HttpRequest):
 
 
 def redirect(request: HttpRequest):
-    return HttpResponseRedirect('/blog/')
+    return render(request, '404.html')
 
