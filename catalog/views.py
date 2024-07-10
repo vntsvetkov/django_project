@@ -30,7 +30,8 @@ def main(request: HttpRequest):
     data.append(book3)
 
     context = {
-        "data": data
+        "data": data,
+        "count": len(data),
     }
 
     return render(request, template_name='books.html', context=context)
@@ -47,7 +48,7 @@ def get_by_genre(request: HttpRequest, genre=None):
             title = request.GET.get('title', '')
             author = request.GET.get('author', '')
 
-        if request.method == "POST":
+        elif request.method == "POST":
             title = request.POST.get('title', '')
             author = request.POST.get('author', '')
 
@@ -87,6 +88,28 @@ def get_by_genre(request: HttpRequest, genre=None):
 
     else:
         return HttpResponseNotFound(f""" <h1> В жанре {genre} книг не найдено </h1>""")
+
+
+def search_book(request):
+    if request.method == "GET":
+        title = request.GET.get('title', '')
+        if not title:
+            context = {
+                'count': 0
+            }
+        else:
+            # сходить в БД, найти все объекты по title
+            data = []
+            context = {
+                "data": data,
+                'count': len(data),
+            }
+
+        return render(request,
+                      template_name='books.html',
+                      context=context)
+
+
 
 
 def redirect(request: HttpRequest):

@@ -12,6 +12,14 @@
     </div>
 {% endblock %}
 
+{% block searchform %}
+<form method="GET" action="book-search/" class="d-flex">
+    {% csrf_token %}
+    <input name="title" class="form-control me-2" type="search" placeholder="Название книги" aria-label="Search">
+    <button class="btn btn-outline-primary" type="submit">Найти</button>
+</form>
+{% endblock searchform %}
+
 {% block content %}
 
     <div style="padding: 20px;" class="container">
@@ -36,7 +44,11 @@
               <div class="container">
 
                     <div class="row">
-                        {% include "book_cards.html" %}
+                        {% if count > 0 %}
+                            {% include "book_cards.html" %}
+                        {% else %}
+                            <h4> По вашему запросу ничего не найдено </h4>
+                        {% endif %}
                     </div>
 
               </div>

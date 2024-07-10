@@ -1,8 +1,9 @@
 from django.urls import path
 from catalog.views import main
-from catalog.views import get_by_genre
+from catalog.views import get_by_genre, search_book
 
 urlpatterns = [
     path('', main),
     path('genre/<str:genre>/', get_by_genre),
+    path('book-search/', search_book)
 ]
