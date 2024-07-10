@@ -2,14 +2,19 @@
 
 Выгрузите репозиторий командой git clone https://github.com/vntsvetkov/django.git
 
-В этом репозитории уже есть виртуальное окружение на версии python 3.12, активируйте его
+Убедитесь, что у вас установлен python 3.12
 
-.venv\Scripts\activate
-либо venv\Scripts\activate
+В этом репозитории уже есть виртуальное окружение на версии python 3.12
 
 Запустите проект командой python manage.py runserver
 
-Перейдите по адресу http://127.0.0.1:8000/catalog - стартовая страница
+Если django server не стартует сразу, то активируйте venv
+
+.venv\Scripts\activate или venv\Scripts\activate
+
+Запустите еще раз проект командой python manage.py runserver
+
+Перейдите по адресу http://127.0.0.1:8000 - стартовая страница
 
 
 Полезные команды:
