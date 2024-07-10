@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from catalog.books import Book
+import psycopg2
 
 
 # Create your views here.
@@ -99,7 +100,17 @@ def search_book(request):
             }
         else:
             # сходить в БД, найти все объекты по title
-            data = []
+            connect = psycopg2.connect(dbname='library',
+                                       host='localhost',
+                                       port=5432,
+                                       user='postgres',
+                                       password='postgres')
+            cursor = connect.cursor()
+            query = """ SELECT * FROM library WHERE title = %s"""
+            params = (title, )
+            cursor.execute(query, params)
+            data = cursor.fetchall()  # [()] -> [Book]
+
             context = {
                 "data": data,
                 'count': len(data),
@@ -108,8 +119,6 @@ def search_book(request):
         return render(request,
                       template_name='books.html',
                       context=context)
-
-
 
 
 def redirect(request: HttpRequest):

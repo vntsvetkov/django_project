@@ -1,7 +1,7 @@
 class Book:
 
     def __init__(self, name: str,
-                 genre:str,
+                 genre: str,
                  description: str,
                  count_load: int):
 
