@@ -3,8 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
-from catalog.books import Book
-import psycopg2
+from catalog.books import Book, BookBuilder
+from database import DBConnect, PGBooksManager
+
 
 
 # Create your views here.
@@ -99,17 +100,16 @@ def search_book(request):
                 'count': 0
             }
         else:
-            # сходить в БД, найти все объекты по title
-            connect = psycopg2.connect(dbname='library',
-                                       host='localhost',
-                                       port=5432,
-                                       user='postgres',
-                                       password='postgres')
-            cursor = connect.cursor()
-            query = """ SELECT * FROM library WHERE title = %s"""
-            params = (title, )
-            cursor.execute(query, params)
-            data = cursor.fetchall()  # [()] -> [Book]
+            connect = DBConnect.get_connect(dbname='library',
+                                            host='localhost',
+                                            port=5432,
+                                            user='postgres',
+                                            password='postgres')
+            builder = BookBuilder()
+            builder.create()
+            builder.set_title(title)
+            book = builder.get_book()
+            data = PGBooksManager.read(connect, book)
 
             context = {
                 "data": data,
