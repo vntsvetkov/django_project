@@ -3,33 +3,24 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseNotFound, HttpResponse, HttpResponseRedirect
-from catalog.books import Book, BookBuilder
+from catalog.books import Book, BookBuilder, BooksContainer
 from database import DBConnect, PGBooksManager
-
 
 
 # Create your views here.
 def main(request: HttpRequest):
+    connect = DBConnect.get_connect(dbname='library',
+                                    host='localhost',
+                                    port=5432,
+                                    user='postgres',
+                                    password='postgres')
 
-    book1 = Book("Совершенные. Тайны Пантеона",
-                 'Приключения',
-                "«Если Август Рэй Эттвуд пройдет свой темный путь, он превзойдет дьявола и наш мир падет…»",
-                107)
-
-    book2 = Book("Железное пламя",
-                 'Фантастика',
-                 "Никто не ожидал, что Вайолет Сорренгейл выживет в Военной академии Басгиат, включая саму Вайолет. ",
-                 25)
-
-    book3 = Book("Зеленый свет",
-                 'Биография',
-                 "Впервые на русском – одно из главных книжных событий 2020 года, «Зеленый свет» знаменитого Мэттью Макконахи (лауреат «Оскара» за главную мужскую роль в фильме «Далласский клуб покупателей»",
-                 78)
-
-    data = list()
-    data.append(book1)
-    data.append(book2)
-    data.append(book3)
+    cursor = connect.cursor()
+    query = """ SELECT * FROM books """
+    cursor.execute(query)
+    container = BooksContainer()
+    container.create_list_books(cursor.fetchall())
+    data = container.get_list_books()
 
     context = {
         "data": data,
@@ -40,9 +31,19 @@ def main(request: HttpRequest):
 
 
 def get_by_genre(request: HttpRequest, genre=None):
-    # Получить список категорий из таблицы Categories
-    genre_data = ['classic', 'adventure', 'fantastic']
+    # connect = DBConnect.get_connect(dbname='library',
+    #                                 host='localhost',
+    #                                 port=5432,
+    #                                 user='postgres',
+    #                                 password='postgres')
+    #
+    # cursor = connect.cursor()
+    # query = """ SELECT translation FROM genres """
+    # cursor.execute(query)
+    # data = cursor.fetchall()
+    # genre_data = [item[0] for item in data]
 
+    genre_data = ['classic']
     if genre in genre_data:
         title = None
         author = None
@@ -57,31 +58,7 @@ def get_by_genre(request: HttpRequest, genre=None):
         if not title and not author:
             return HttpResponseNotFound(f""" <h1> В жанре {genre} этой книги не найдено </h1>""")
 
-        # Запрос к БД по 2 параметрам и получение данных в data
-        # Посмотреть что пришли непустые данные
-        # Либо допустим пришли следующие 2 книги book1 и book2
-        book1 = Book("Совершенные. Тайны Пантеона",
-                     "фантастика",
-                     "«Если Август Рэй Эттвуд пройдет свой темный путь, он превзойдет дьявола и наш мир падет…»",
-                     107)
-
-        book2 = Book("Железное пламя",
-                     "фантастика",
-                     "Никто не ожидал, что Вайолет Сорренгейл выживет в Военной академии Басгиат, включая саму Вайолет. ",
-                     25)
-
-        book3 = Book("Зеленый свет",
-                     "биография",
-                     "Впервые на русском – одно из главных книжных событий 2020 года, «Зеленый свет» "
-                     "знаменитого Мэттью Макконахи (лауреат «Оскара» за главную мужскую роль в фильме "
-                     "«Далласский клуб покупателей»",
-                     78)
-
         data = list()
-        data.append(book1)
-        data.append(book2)
-        data.append(book3)
-
         context = {
             "data": data
         }

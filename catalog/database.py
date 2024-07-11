@@ -41,7 +41,7 @@ class PGBooksManager(DBManager):
 
     @staticmethod
     def create(connect, book: Book):
-        # Вызвать запрос вставки данных из объекта
+        # Вызвать запрос вставки данных из объекта в таблицу
         ...
 
     @staticmethod
@@ -68,22 +68,11 @@ class PGBooksManager(DBManager):
 
     @staticmethod
     def update(connect, index_old_book: int, new_book: Book):
-        """
-        try:
-            with connect.cursor() as cursor:
-                params = (new_device.device_os, new_device.device_name,
-                          new_device.model, new_device.memory,
-                          new_device.price, new_device.release_date,
-                          new_device.counter, index_old_device)
-                query = ""
-                cursor.execute(query, params)
-        except (Exception, psycopg2.Error) as e:
-            print(e)
-        """
+        # Обновить данные о книге в таблице
         ...
 
     @staticmethod
     def delete(connect, book: Book):
-        # Найти индекс девайса и удалить его
+        # Удалить девайс
         ...
 
