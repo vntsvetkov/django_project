@@ -25,10 +25,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', catalog.views.main),
     path('catalog/', include('catalog.urls')),
+    re_path('catalog/book-search/\S*', catalog.views.search_book),
     path('blog/', include('blog.urls')),
     path('personal/', include('personal.urls')),
     re_path(r'^catalog/', catalog.views.redirect),
     re_path(r'^blog/', blog.views.redirect),
     re_path(r'^personal/', personal.views.redirect),
-
 ]

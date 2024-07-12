@@ -27,17 +27,13 @@
             <div class="col-2">
                 <ul class="nav flex-column">
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Показать все</a>
+                    <a class="nav-link" href="http://127.0.0.1:8000/catalog/">Показать все</a>
                   </li>
+                    {% for text, url in genres.items %}
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Классика</a>
+                    <a class="nav-link" href="{{ url }}">{{ text }}</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Приключения</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Фантастика</a>
-                  </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="col-10">

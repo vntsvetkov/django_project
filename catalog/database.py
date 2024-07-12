@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from books import Book, BookBuilder, BooksContainer
+from .books import Book, BooksContainer
 import psycopg2
 
 

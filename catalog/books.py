@@ -61,23 +61,18 @@ class BookBuilder(Builder):
     def set_genre(self, genre):
         self._book.genre = genre
 
-    @abstractmethod
     def set_author(self, author):
         self._book.author = author
 
-    @abstractmethod
     def set_description(self, description):
         self._book.description = description
 
-    @abstractmethod
     def set_rating(self, rating):
         self._book.rating = rating
 
-    @abstractmethod
     def set_count_load(self, count_load):
         self._book.count_load = count_load
 
-    @abstractmethod
     def get_book(self):
         return self._book
 
@@ -114,7 +109,7 @@ class BooksContainer:
             book = creator.make(record)
             self._books.append(book)
 
-    def add_device(self, book: Book):
+    def add_book(self, book: Book):
         self._books.append(book)
 
     def get_list_books(self):
