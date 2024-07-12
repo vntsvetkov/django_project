@@ -40,42 +40,65 @@ def main(request: HttpRequest):
 
 
 def get_by_genre(request: HttpRequest, genre=None):
-    # connect = DBConnect.get_connect(dbname='library',
-    #                                 host='localhost',
-    #                                 port=5432,
-    #                                 user='postgres',
-    #                                 password='postgres')
-    #
-    # cursor = connect.cursor()
-    # query = """ SELECT translation FROM genres """
-    # cursor.execute(query)
-    # data = cursor.fetchall()
-    # genre_data = [item[0] for item in data]
+    connect = DBConnect.get_connect(dbname='library',
+                                    host='localhost',
+                                    port=5432,
+                                    user='postgres',
+                                    password='postgres')
 
-    genre_data = ['classic']
-    if genre in genre_data:
-        title = None
-        author = None
-        if request.method == "GET":
-            title = request.GET.get('title', '')
-            author = request.GET.get('author', '')
+    cursor = connect.cursor()
+    query = """ SELECT name_genre, translation FROM genres """
+    cursor.execute(query)
+    data = cursor.fetchall()
+    genre_data = {item[0]: item[1] for item in data}
+    genres = {item[0]: "http://127.0.0.1:8000/catalog/genre/" + item[1] + '/' for item in data}
+    cursor.close()
 
-        elif request.method == "POST":
-            title = request.POST.get('title', '')
-            author = request.POST.get('author', '')
+    if genre not in genre_data.values():
 
-        if not title and not author:
-            return HttpResponseNotFound(f""" <h1> В жанре {genre} этой книги не найдено </h1>""")
-
-        data = list()
         context = {
-            "data": data
+            'count': 0,
+            'genres': genres,
         }
 
-        return render(request, template_name='books.html', context=context)
-
+        return render(request,
+                      template_name='books.html',
+                      context=context)
     else:
-        return HttpResponseNotFound(f""" <h1> В жанре {genre} книг не найдено </h1>""")
+        params = (genre, )
+        query = """ SELECT
+                        books.book_id,
+                        books.title,
+                        genres.name_genre,
+                        books.author,
+                        books.description,
+                        books.rating,
+                        books.count_load
+                    FROM 
+                        books, genres
+                    WHERE 
+                        books.genre_id = genres.genre_id and
+                        genres.translation = %s """
+
+        cursor = connect.cursor()
+        cursor.execute(query, params)
+        books = cursor.fetchall()
+
+        container = BooksContainer()
+        container.create_list_books(books)
+        data = container.get_list_books()
+        count = len(data) if data is not None else 0
+        cursor.close()
+
+        context = {
+            "data": data,
+            "count": count,
+            "genres": genres,
+        }
+
+        return render(request,
+                      template_name='books.html',
+                      context=context)
 
 
 def search_book(request):
