@@ -28,10 +28,7 @@ def main(request: HttpRequest):
     query = """ SELECT name_genre, translation FROM genres """
     cursor.execute(query)
     genres = {item[0]: "http://127.0.0.1:8000/catalog/genre/" + item[1] + '/' for item in cursor.fetchall()}
-    print(genres)
     cursor.close()
-
-    connect.close()
 
     context = {
         "data": data,
@@ -82,12 +79,24 @@ def get_by_genre(request: HttpRequest, genre=None):
 
 
 def search_book(request):
+    connect = DBConnect.get_connect(dbname='library',
+                                    host='localhost',
+                                    port=5432,
+                                    user='postgres',
+                                    password='postgres')
+    cursor = connect.cursor()
+    query = """ SELECT name_genre, translation FROM genres """
+    cursor.execute(query)
+    genres = {item[0]: "http://127.0.0.1:8000/catalog/genre/" + item[1] + '/' for item in cursor.fetchall()}
+    cursor.close()
+
     if request.method == "GET":
         title = request.GET.get('title', '')
 
         if not title:
             context = {
-                'count': 0
+                'count': 0,
+                'genres': genres,
             }
         else:
             connect = DBConnect.get_connect(dbname='library',
@@ -103,8 +112,9 @@ def search_book(request):
             data = PGBooksManager.read(connect, book)
             count = len(data) if data is not None else 0
             context = {
-                "data": data,
+                'data': data,
                 'count': count,
+                'genres': genres,
             }
 
         return render(request,
