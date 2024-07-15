@@ -11,6 +11,7 @@ class Book:
         self.description = None
         self.rating = None
         self.count_load = None
+        self.cover = None
 
 
 class Builder(ABC):
@@ -44,6 +45,10 @@ class Builder(ABC):
         ...
 
     @abstractmethod
+    def set_cover(self, cover):
+        ...
+
+    @abstractmethod
     def get_book(self):
         ...
 
@@ -73,6 +78,9 @@ class BookBuilder(Builder):
     def set_count_load(self, count_load):
         self._book.count_load = count_load
 
+    def set_cover(self, cover):
+        self._book.cover = cover
+
     def get_book(self):
         return self._book
 
@@ -93,6 +101,8 @@ class BookCreator:
         self._builder.set_description(book[4])
         self._builder.set_rating(book[5])
         self._builder.set_count_load(book[6])
+        img_path = '../static/img/covers/' + str(book[7]) + '.jpg'
+        self._builder.set_cover(img_path)
         return self._builder.get_book()
 
 

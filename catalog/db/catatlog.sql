@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS books (
 	description TEXT NOT NULL DEFAULT 'Без описания',
 	rating NUMERIC(3,2) NOT NULL CHECK(rating BETWEEN 0 and 5) DEFAULT 0,
 	count_load INTEGER NOT NULL DEFAULT 0,
+	cover INTEGER NOT NULL DEFAULT 0,
 	FOREIGN KEY(genre_id)
         REFERENCES genres(genre_id)
             ON DELETE NO ACTION

@@ -1,0 +1,13 @@
+h1 {
+    text-align: center;
+    padding: 20px;
+    height: 50px;
+}
+
+.header-info {
+    background-image: url("../img/header-news.jpg");
+    height: 150px;
+    background-size: cover;
+    padding: 25px;
+    border: 1px solid black;
+}

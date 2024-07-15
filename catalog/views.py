@@ -73,7 +73,8 @@ def get_by_genre(request: HttpRequest, genre=None):
                         books.author,
                         books.description,
                         books.rating,
-                        books.count_load
+                        books.count_load,
+                        books.cover
                     FROM 
                         books, genres
                     WHERE 
