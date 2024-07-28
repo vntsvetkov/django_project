@@ -101,7 +101,7 @@ class BookCreator:
         self._builder.set_description(book[4])
         self._builder.set_rating(book[5])
         self._builder.set_count_load(book[6])
-        img_path = '../static/img/covers/' + str(book[7]) + '.jpg'
+        img_path = str(book[7]) + '.jpg'
         self._builder.set_cover(img_path)
         return self._builder.get_book()
 
