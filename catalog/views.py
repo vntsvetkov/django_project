@@ -84,12 +84,12 @@ def get_by_genre(request: HttpRequest, genre=None):
         cursor = connect.cursor()
         cursor.execute(query, params)
         books = cursor.fetchall()
+        cursor.close()
 
         container = BooksContainer()
         container.create_list_books(books)
         data = container.get_list_books()
         count = len(data) if data is not None else 0
-        cursor.close()
 
         context = {
             "data": data,

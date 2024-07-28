@@ -1,4 +1,4 @@
-
+{% load static %}
 {% for book in data %}
           <div class="col-6">
             <div class="card mb-3" style="max-width: 540px;">
@@ -6,7 +6,7 @@
                   <div class="col-md-4">
                     <img width="200" height="300" src="{{ book.cover }}" class="img-fluid rounded-start" alt="...">
                   </div>
-
+                  
                   <div class="col-md-8">
                     <div class="card-body">
                       <h5 class="card-title">{{ book.title }}</h5>
@@ -18,3 +18,4 @@
               </div>
           </div>
 {% endfor %}
+
