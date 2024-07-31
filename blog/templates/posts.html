@@ -19,3 +19,15 @@
     <button class="btn btn-outline-primary" type="submit">Найти</button>
 </form>
 {% endblock searchform %}
+
+{% block content %}
+    {% for post in posts %}
+            <h3>
+                {{ post.title }}
+            </h3>
+            <p>
+                {{ post.text }}
+            </p>
+
+    {% endfor %}
+{% endblock content %}
