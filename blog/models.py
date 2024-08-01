@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 class Post(models.Model):
 
-    image = models.ImageField(upload_to='images/', null=True)
+    image = models.ImageField(upload_to='blog/media/images', null=True)
     title = models.CharField(max_length=120, null=False)
     text = models.TextField(null=False)
     author = models.CharField(max_length=50)

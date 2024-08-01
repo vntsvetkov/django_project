@@ -7,7 +7,7 @@ from .models import Post
 def main(request: HttpRequest):
 
     posts = Post.objects.values()
-
+    print(posts)
     context = {
         'posts': posts
     }
