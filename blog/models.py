@@ -1,14 +1,14 @@
 from django.db import models
-from datetime import date
 
 
 # Create your models here.
 class Post(models.Model):
 
+    image = models.ImageField(upload_to='images/', null=True)
     title = models.CharField(max_length=120, null=False)
     text = models.TextField(null=False)
-    author = models.CharField(max_length=20)
-    publish_date = models.DateField(null=False, default=date.today())
+    author = models.CharField(max_length=50)
+    publish_date = models.DateField(null=False)
 
     objects = models.Manager()
 
