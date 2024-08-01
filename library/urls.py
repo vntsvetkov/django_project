@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 import catalog.views
 import blog.views
@@ -33,3 +35,7 @@ urlpatterns = [
     re_path(r'^blog/', blog.views.redirect),
     re_path(r'^personal/', personal.views.redirect),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
