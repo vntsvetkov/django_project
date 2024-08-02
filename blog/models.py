@@ -1,6 +1,14 @@
 from django.db import models
 
 
+class HashTag(models.Model):
+
+    name = models.CharField(max_length=120, null=False)
+
+class Author(models.Model):
+
+    name = models.CharField(max_length=120, null=False)
+
 # Create your models here.
 class Post(models.Model):
 

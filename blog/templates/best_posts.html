@@ -1,0 +1,11 @@
+{% for post in posts %}
+                        <div class="card mb-3" style="width: 18rem;">
+                          <div class="card-body">
+                            <h6 class="card-title">{{post.title}}</h6>
+
+                            <p class="card-text">{{ post.text|slice:"0:40"|add:"..." }}</p>
+                            <a href="#" class="card-link">Читать</a>
+
+                          </div>
+                        </div>
+                    {% endfor %}
