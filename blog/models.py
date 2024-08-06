@@ -29,6 +29,7 @@ class Post(models.Model):
     )
     publish_date = models.DateField(null=False)
     tags = models.ManyToManyField(HashTag)
+    rating = models.DecimalField(decimal_places=1, max_digits=2, null=False, default=0)
     objects = models.Manager()
 
     def __str__(self):
