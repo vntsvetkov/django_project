@@ -2,17 +2,19 @@
 
 Выгрузите репозиторий командой git clone https://github.com/vntsvetkov/django.git
 
-Убедитесь, что у вас установлен python 3.12
+В этом репозитории уже есть виртуальное окружение на версии python 3.12, убедитесь, что у вас установлен python 3.12, если нет - установите.
 
-В этом репозитории уже есть виртуальное окружение на версии python 3.12
-
-Запустите проект командой python manage.py runserver
-
-Если django server не стартует сразу, то активируйте venv
+активируйте venv, если он не активировался автоматически
 
 .venv\Scripts\activate или venv\Scripts\activate
 
-Запустите еще раз проект командой python manage.py runserver
+Выполнить миграцию БД:
+  python manage.py makemigrations
+  python manage.py migrate
+
+Запустить скрипты переноса данных в БД
+
+Запустите проект командой python manage.py runserver
 
 Перейдите по адресу http://127.0.0.1:8000 - стартовая страница
 
